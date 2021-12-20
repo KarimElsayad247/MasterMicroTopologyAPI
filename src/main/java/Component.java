@@ -1,2 +1,2 @@
-package PACKAGE_NAME;public class Component {
+public class Component {
 }
