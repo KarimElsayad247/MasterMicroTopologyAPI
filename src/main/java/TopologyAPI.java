@@ -1,5 +1,22 @@
+import java.lang.reflect.Array;
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+
+import com.google.gson.JsonDeserializationContext;
+import com.google.gson.JsonDeserializer;
+import com.google.gson.JsonElement;
+
 public class TopologyAPI {
     private Topology[] topologies;
+
+    public static class TopologyDeserilizer implements JsonDeserializer<Topology> {
+        @Override
+        public Topology deserialize(JsonElement json, Type topology, JsonDeserializationContext context) {
+            System.out.println(json.toString());
+            ArrayList<Component> components = new ArrayList<>();
+            return new Topology("id", components);
+        }
+    }
 
     public void readJSON(String fileName) {
 
