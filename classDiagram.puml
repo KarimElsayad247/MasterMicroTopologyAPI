@@ -2,6 +2,9 @@
 class Topology {
     id: String
 }
-class components
+class components {
+    type: String
+    id: String
+}
 Topology "1" *-- "0*" components : Contains
 @enduml
