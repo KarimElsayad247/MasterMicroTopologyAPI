@@ -2,9 +2,19 @@
 class Topology {
     id: String
 }
-class components {
+class Components {
     type: String
     id: String
+    attributes: Object
+    netlist: Map
 }
-Topology "1" *-- "0*" components : Contains
+
+class Atrributes {
+    name: String
+    defaultValue: double
+    minValue: double
+    maxValue: double
+}
+Topology "1" *-- "0*" Components : Contains
+Components "1" *-- "1" Atrributes : Has
 @enduml
