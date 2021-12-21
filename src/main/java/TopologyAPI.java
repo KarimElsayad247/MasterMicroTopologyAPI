@@ -93,5 +93,8 @@ public class TopologyAPI {
         return null;
     }
 
+    public ArrayList<Topology> getTopologyArrayList() {
+        return topologyArrayList;
+    }
 }
 

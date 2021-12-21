@@ -47,6 +47,9 @@ public class Component {
                     break;
                 default: // this is the attribute case
                     String attributeName = entry.getKey();
+
+                    // The attributesObject only contains jsonPrimitives. We can't call
+                    // getAsObject on any of them.
                     JsonObject attributesObject = entry.getValue().getAsJsonObject();
                     double defaultvalue = attributesObject.get("default").getAsDouble();
                     double minVale = attributesObject.get("min").getAsDouble();
@@ -55,6 +58,10 @@ public class Component {
 
             }
         }
+    }
+
+    public boolean isConnectedToNetlistNode(String node) {
+        return false;
     }
 
     public String getType() {
