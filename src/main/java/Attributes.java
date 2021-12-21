@@ -2,14 +2,8 @@ import com.google.gson.annotations.SerializedName;
 
 public class Attributes {
     private String name;
-
-    @SerializedName("default")
     private double defaultValue;
-
-    @SerializedName("min")
     private double minValue;
-
-    @SerializedName("max")
     private double maxValue;
 
     public Attributes(String name, double defaultValue, double minValue, double maxValue) {
