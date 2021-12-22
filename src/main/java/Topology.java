@@ -1,8 +1,9 @@
 import java.util.ArrayList;
+import java.util.List;
 
 public class Topology {
     private String id;
-    private ArrayList<Component> components;
+    private List<Component> components;
 
     public Topology(String id, ArrayList<Component> components) {
         this.id = id;
@@ -17,7 +18,7 @@ public class Topology {
         this.id = id;
     }
 
-    public ArrayList<Component> getComponents() {
+    public List<Component> getComponents() {
         return components;
     }
 
