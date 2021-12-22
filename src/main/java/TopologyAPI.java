@@ -16,7 +16,7 @@ public class TopologyAPI {
     // I believe this will make all search operations much more efficient.
     private Map<String, Integer> idToTopologyIndexMap = new HashMap<>();
 
-    private class TopologyDeserilizer implements JsonDeserializer<Topology> {
+    private static class TopologyDeserilizer implements JsonDeserializer<Topology> {
         @Override
         public Topology deserialize(JsonElement json, Type topology, JsonDeserializationContext context) {
 
@@ -52,8 +52,7 @@ public class TopologyAPI {
                 throw new java.lang.RuntimeException("TopologyID not assigned!");
             }
 
-            Topology newTopology = new Topology(topologyID, components);
-            return newTopology;
+            return new Topology(topologyID, components);
         }
     }
 
@@ -112,10 +111,17 @@ public class TopologyAPI {
     /**
      *
      * @param topologyID: Id of a topology we wish to find its components
-     * @return a list of components in a given topology
+     * @return a list of components in a given topology. If a topology doesn't exist,
+     *          null is returned
      */
     public List<Component> queryDevices(String topologyID) {
-        return null;
+        if (this.idToTopologyIndexMap.containsKey(topologyID)) {
+            int topologyIndex = this.idToTopologyIndexMap.get(topologyID);
+            return this.topologyArrayList.get(topologyIndex).getComponents();
+        }
+        else {
+            return null;
+        }
     }
 
     public List<Component> queryDevicesWithNetlistNode(String topologyID, String netlistNodeID) {
