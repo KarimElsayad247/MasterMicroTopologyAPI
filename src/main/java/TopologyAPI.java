@@ -77,12 +77,32 @@ public class TopologyAPI {
 
     }
 
-    public Topology[] queryTopologies() {
-        return null;
+    /**
+     * Query about which topologies are currently in the memory.
+     * @return The array containing all topologies currently stored in memory
+     */
+    public ArrayList<Topology> queryTopologies() {
+        return this.topologyArrayList;
     }
 
-    public void deleteToppology(String topologyID) {
 
+    public boolean deleteToppology(String topologyID) {
+        // First, find the topology with the given ID
+        int indexTopologyToDelete = -1;
+
+        for (int i = 0; i < this.topologyArrayList.size(); i++) {
+            if (this.topologyArrayList.get(i).getId().equals(topologyID)) {
+                indexTopologyToDelete = i;
+                break;
+            }
+        }
+
+        // If element to delete doesn't exist in list, return false and have the api user
+        // deal with the situation
+        if (indexTopologyToDelete == -1) return false;
+
+        this.topologyArrayList.remove(indexTopologyToDelete);
+        return true;
     }
 
     public Component[] queryDevices(String topologyID) {
