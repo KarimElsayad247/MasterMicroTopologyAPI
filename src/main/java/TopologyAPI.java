@@ -9,7 +9,12 @@ import com.google.gson.*;
 
 public class TopologyAPI {
 
+    // List containing all topologies stored in memory
     private List<Topology> topologyArrayList = new ArrayList<>();
+
+    // Map containing references to topology index in list, based on their id.
+    // I believe this will make all search operations much more efficient.
+    private Map<String, Integer> idToTopologyIndexMap = new HashMap<>();
 
     private class TopologyDeserilizer implements JsonDeserializer<Topology> {
         @Override
@@ -64,9 +69,11 @@ public class TopologyAPI {
         Path path = Path.of(fileName);
         String content = Files.readString(path, StandardCharsets.US_ASCII);
 
-        // Create a new topology from the json string and store it in list
+        // Create a new topology from the json string and store it in list, and add it
+        // to the map
         Topology topology = gson.fromJson(content, Topology.class);
-        topologyArrayList.add(topology);
+        this.idToTopologyIndexMap.put(topology.getId(), this.topologyArrayList.size());
+        this.topologyArrayList.add(topology);
     }
 
     public void writeJSON(String topologyID) {
@@ -83,34 +90,36 @@ public class TopologyAPI {
 
 
     public boolean deleteToppology(String topologyID) {
-        // First, find the topology with the given ID
-        int indexTopologyToDelete = -1;
+        // First, find the index of the topology with the given ID
+        int indexTopologyToDelete;
 
-        for (int i = 0; i < this.topologyArrayList.size(); i++) {
-            if (this.topologyArrayList.get(i).getId().equals(topologyID)) {
-                indexTopologyToDelete = i;
-                break;
-            }
+        if (this.idToTopologyIndexMap.containsKey(topologyID)) {
+            indexTopologyToDelete = this.idToTopologyIndexMap.get(topologyID);
+        }
+        else {
+            indexTopologyToDelete = -1;
         }
 
         // If element to delete doesn't exist in list, return false and have the api user
         // deal with the situation
         if (indexTopologyToDelete == -1) return false;
 
+        // Finally, delete the topology from memory
         this.topologyArrayList.remove(indexTopologyToDelete);
         return true;
     }
 
+    /**
+     *
+     * @param topologyID: Id of a topology we wish to find its components
+     * @return a list of components in a given topology
+     */
     public List<Component> queryDevices(String topologyID) {
         return null;
     }
 
     public List<Component> queryDevicesWithNetlistNode(String topologyID, String netlistNodeID) {
         return null;
-    }
-
-    public List<Topology> getTopologyArrayList() {
-        return topologyArrayList;
     }
 }
 
