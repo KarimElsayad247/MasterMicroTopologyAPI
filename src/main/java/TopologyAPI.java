@@ -89,7 +89,7 @@ public class TopologyAPI {
     }
 
 
-    public boolean deleteToppology(String topologyID) {
+    public boolean deleteTopology(String topologyID) {
         // First, find the index of the topology with the given ID
         int indexTopologyToDelete;
 
