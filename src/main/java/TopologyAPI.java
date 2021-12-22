@@ -1,19 +1,15 @@
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.lang.reflect.Type;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 import com.google.gson.*;
 
 public class TopologyAPI {
 
-    private ArrayList<Topology> topologyArrayList = new ArrayList<>();
+    private List<Topology> topologyArrayList = new ArrayList<>();
 
     private class TopologyDeserilizer implements JsonDeserializer<Topology> {
         @Override
@@ -81,7 +77,7 @@ public class TopologyAPI {
      * Query about which topologies are currently in the memory.
      * @return The array containing all topologies currently stored in memory
      */
-    public ArrayList<Topology> queryTopologies() {
+    public List<Topology> queryTopologies() {
         return this.topologyArrayList;
     }
 
@@ -105,15 +101,15 @@ public class TopologyAPI {
         return true;
     }
 
-    public Component[] queryDevices(String topologyID) {
+    public List<Component> queryDevices(String topologyID) {
         return null;
     }
 
-    public Component[] queryDevicesWithNetlistNode(String topologyID, String netlistNodeID) {
+    public List<Component> queryDevicesWithNetlistNode(String topologyID, String netlistNodeID) {
         return null;
     }
 
-    public ArrayList<Topology> getTopologyArrayList() {
+    public List<Topology> getTopologyArrayList() {
         return topologyArrayList;
     }
 }
