@@ -5,8 +5,9 @@ class Topology {
 class Components {
     type: String
     id: String
-    attributes: Object
+    attributes: Atrributes
     netlist: Map
+    isConnectedToNetlistNode(): Boolean
 }
 
 class Atrributes {
