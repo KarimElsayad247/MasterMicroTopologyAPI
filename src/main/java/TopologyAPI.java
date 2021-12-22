@@ -16,7 +16,7 @@ public class TopologyAPI {
     // I believe this will make all search operations much more efficient.
     private Map<String, Integer> idToTopologyIndexMap = new HashMap<>();
 
-    private static class TopologyDeserilizer implements JsonDeserializer<Topology> {
+    private static class TopologyDeserializer implements JsonDeserializer<Topology> {
         @Override
         public Topology deserialize(JsonElement json, Type topology, JsonDeserializationContext context) {
 
@@ -61,7 +61,7 @@ public class TopologyAPI {
         // Assign the custom deserializer to gsonBuilder to get a gson object using
         // that deserializer
         GsonBuilder gsonBuilder   = new GsonBuilder();
-        gsonBuilder.registerTypeAdapter(Topology.class, new TopologyAPI.TopologyDeserilizer());
+        gsonBuilder.registerTypeAdapter(Topology.class, new TopologyDeserializer());
         Gson gson = gsonBuilder.create();
 
         // Read the contents of the json file
@@ -105,6 +105,14 @@ public class TopologyAPI {
 
         // Finally, delete the topology from memory
         this.topologyArrayList.remove(indexTopologyToDelete);
+
+        // Correct indices in map
+        this.idToTopologyIndexMap.forEach((s, i) -> {
+            if (i > indexTopologyToDelete) {
+                this.idToTopologyIndexMap.replace(s, i - 1);
+            }
+        });
+
         return true;
     }
 
