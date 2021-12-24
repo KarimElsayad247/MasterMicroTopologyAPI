@@ -42,9 +42,7 @@ public class TopologyAPI {
                     JsonArray array = entry.getValue().getAsJsonArray();
 
                     // Of-load component creation from json to Component class
-                    array.forEach(jsonElement -> {
-                        components.add(new Component(jsonElement));
-                    });
+                    array.forEach(jsonElement -> components.add(new Component(jsonElement)));
                 }
             }
 
@@ -120,12 +118,7 @@ public class TopologyAPI {
         // First, find the index of the topology with the given ID
         int indexTopologyToDelete;
 
-        if (this.idToTopologyIndexMap.containsKey(topologyID)) {
-            indexTopologyToDelete = this.idToTopologyIndexMap.get(topologyID);
-        }
-        else {
-            indexTopologyToDelete = -1;
-        }
+        indexTopologyToDelete = this.idToTopologyIndexMap.getOrDefault(topologyID, -1);
 
         // If element to delete doesn't exist in list, return false and have the api user
         // deal with the situation
@@ -161,7 +154,14 @@ public class TopologyAPI {
     }
 
     public List<Component> queryDevicesWithNetlistNode(String topologyID, String netlistNodeID) {
-        return null;
+        if (this.idToTopologyIndexMap.containsKey(topologyID)) {
+            int topologyIndex = this.idToTopologyIndexMap.get(topologyID);
+            Topology topology = this.topologyArrayList.get(topologyIndex);
+            return topology.getComponentsConnectedToNetlistNode(netlistNodeID);
+        }
+        else {
+            return null;
+        }
     }
 }
 
