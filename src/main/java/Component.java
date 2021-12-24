@@ -1,5 +1,6 @@
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonPrimitive;
 
 import java.util.HashMap;
 import java.util.Iterator;
@@ -62,6 +63,28 @@ public class Component {
 
     public boolean isConnectedToNetlistNode(String node) {
         return false;
+    }
+
+    public JsonElement getAsJsonElement() {
+        JsonObject element = new JsonObject();
+        element.add("type", new JsonPrimitive(this.type));
+        element.add("id", new JsonPrimitive(this.id));
+
+        JsonObject attributes = new JsonObject();
+        attributes.add("default", new JsonPrimitive(this.attributes.getDefaultValue()));
+        attributes.add("min", new JsonPrimitive(this.attributes.getMinValue()));
+        attributes.add("max", new JsonPrimitive(this.attributes.getMaxValue()));
+
+        element.add(this.attributes.getName(), attributes);
+
+        JsonObject netlist = new JsonObject();
+        this.netlist.forEach((s, s2) -> {
+            netlist.add(s, new JsonPrimitive(s2));
+        });
+
+        element.add("netlist", netlist);
+
+        return element;
     }
 
     public String getType() {
