@@ -56,6 +56,17 @@ public class TopologyAPI {
         }
     }
 
+    private static class TopologySerializer implements JsonSerializer<Topology> {
+        @Override
+        public JsonElement serialize(Topology topology, Type type, JsonSerializationContext jsonSerializationContext) {
+            JsonObject element = new JsonObject();
+            element.add("id", new JsonPrimitive(topology.getId()));
+            element.add("components", topology.getComponentsAsJsonArray());
+            return element;
+        }
+
+    }
+
     public void readJSON(String fileName) throws IOException{
 
         // Assign the custom deserializer to gsonBuilder to get a gson object using
@@ -75,8 +86,25 @@ public class TopologyAPI {
         this.topologyArrayList.add(topology);
     }
 
-    public void writeJSON(String topologyID) {
+    public void writeJSON(String topologyID, String fileName) throws IllegalArgumentException, IOException  {
+        // Assign the custom serializer to gsonBuilder to get a gson object using
+        // that serializer
+        GsonBuilder gsonBuilder   = new GsonBuilder();
+        gsonBuilder.registerTypeAdapter(Topology.class, new TopologySerializer());
+        gsonBuilder.setPrettyPrinting();
+        Gson gson = gsonBuilder.create();
 
+        boolean topologyExists = this.idToTopologyIndexMap.containsKey(topologyID);
+        if (!topologyExists) {
+            throw new IllegalArgumentException(String.format("No topology with id %s", topologyID));
+        }
+
+        int topologyIndex = this.idToTopologyIndexMap.get(topologyID);
+        Topology topology = this.topologyArrayList.get(topologyIndex);
+
+        String output = gson.toJson(topology);
+        Path path = Path.of(fileName);
+        Files.writeString(path, output, StandardCharsets.US_ASCII);
     }
 
     /**
