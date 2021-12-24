@@ -15,7 +15,7 @@ class TopologyAPITest {
     }
 
     @Nested
-    public class readMethodTest {
+    public class ReadMethodTest {
         @Test
         @DisplayName("Successfully creates one topology from valid JSON file")
         public void createsTopologyFromFile() throws IOException {
@@ -34,7 +34,7 @@ class TopologyAPITest {
     }
 
     @Nested
-    public class writeMethodTest {
+    public class WriteMethodTest {
         @Test
         @DisplayName("Writes Topology to to file correctly")
         public void writesTopologyToFile() throws IOException {
@@ -66,7 +66,7 @@ class TopologyAPITest {
     }
 
     @Nested
-    public class deleteMethodTest {
+    public class DeleteMethodTest {
         @Test
         @DisplayName("Successfully deletes existing topologies")
         public void deletesExistingTopologies() throws IOException{
@@ -93,7 +93,7 @@ class TopologyAPITest {
     }
 
     @Nested
-    public class queryDevicesMethodTest {
+    public class QueryDevicesMethodTest {
         @Test
         @DisplayName("Successfully queries which devices are in a given topology")
         public void queryDevicesInTopologySuccess() throws IOException {
@@ -111,6 +111,48 @@ class TopologyAPITest {
             Assertions.assertEquals("res2", components2.get(0).getId());
             Assertions.assertEquals("nmos", components2.get(1).getType());
             Assertions.assertEquals("m2", components2.get(1).getId());
+        }
+    }
+
+    @Nested
+    public class QueryDevicesConnectedToNodeTest {
+
+        @Test
+        @DisplayName("Successfully queries which devices are connected to which nodes")
+        public void queryDevicesConnectedToNodes() throws IOException {
+
+            topologyAPI1.readJSON(fileName1);
+
+            List<Component> componentsN1 = topologyAPI1
+                    .queryDevicesWithNetlistNode("top1", "n1");
+            Assertions.assertEquals(2, componentsN1.size());
+
+            List<Component> componentsVin = topologyAPI1
+                    .queryDevicesWithNetlistNode("top1", "vin");
+            Assertions.assertEquals(1, componentsVin.size());
+
+            List<Component> componentsNonExistent = topologyAPI1
+                    .queryDevicesWithNetlistNode("top1", "none_existent");
+            Assertions.assertEquals(0, componentsNonExistent.size());
+        }
+
+        @Test
+        @DisplayName("Returns null when id doesn't belong to any existing topology")
+        public void returnsNullWhenTopologyDoesntExist() throws IOException {
+
+            topologyAPI1.readJSON(fileName1);
+
+            List<Component> componentsBadTopologyID = topologyAPI1
+                    .queryDevicesWithNetlistNode("bad_topology_id", "ni");
+            Assertions.assertNull(componentsBadTopologyID);
+        }
+
+        @Test
+        @DisplayName("Returns null when id doesn't belong to any existing topology")
+        public void returnsNullWhenNoTopologyInMemory() {
+            List<Component> componentsBadTopologyID = topologyAPI1
+                    .queryDevicesWithNetlistNode("bad_topology_id", "ni");
+            Assertions.assertNull(componentsBadTopologyID);
         }
     }
 }
