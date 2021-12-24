@@ -1,6 +1,7 @@
 @startuml
 class Topology {
     id: String
+    components: List
 }
 class Components {
     type: String
