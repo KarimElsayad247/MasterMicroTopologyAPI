@@ -1,5 +1,3 @@
-import com.google.gson.annotations.SerializedName;
-
 /**
  * Simple POJO to store attributes
  */

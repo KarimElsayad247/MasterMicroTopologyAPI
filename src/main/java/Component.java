@@ -29,15 +29,11 @@ public class Component {
             Map.Entry<String, JsonElement> entry = (Map.Entry<String, JsonElement>) entrySetIterator.next();
             String key = entry.getKey();
             switch (key) {
-                case "type":
-                    this.type = entry.getValue().getAsString();
-                    break;
-                case "id":
-                    this.id = entry.getValue().getAsString();
-                    break;
-                case "netlist":
+                case "type" -> this.type = entry.getValue().getAsString();
+                case "id" -> this.id = entry.getValue().getAsString();
+                case "netlist" -> {
                     JsonObject netlistJsonObject = entry.getValue().getAsJsonObject();
-                    Set<Map.Entry<String,JsonElement>> netlistEntrySet = netlistJsonObject.entrySet();
+                    Set<Map.Entry<String, JsonElement>> netlistEntrySet = netlistJsonObject.entrySet();
 
                     // Add all entries to map
                     Iterator netlistIterator = netlistEntrySet.iterator();
@@ -45,8 +41,8 @@ public class Component {
                         Map.Entry<String, JsonElement> netlistEntry = (Map.Entry<String, JsonElement>) netlistIterator.next();
                         this.netlist.put(netlistEntry.getKey(), netlistEntry.getValue().getAsString());
                     }
-                    break;
-                default: // this is the attribute case
+                }
+                default -> { // this is the attribute case
                     String attributeName = entry.getKey();
 
                     // The attributesObject only contains jsonPrimitives. We can't call
@@ -56,12 +52,15 @@ public class Component {
                     double minVale = attributesObject.get("min").getAsDouble();
                     double maxValue = attributesObject.get("max").getAsDouble();
                     this.attributes = new Attributes(attributeName, defaultvalue, minVale, maxValue);
-
+                }
             }
         }
     }
 
     public boolean isConnectedToNetlistNode(String node) {
+        for (String value: this.netlist.values()) {
+            if(value.equals(node)) return true;
+        }
         return false;
     }
 
@@ -78,9 +77,7 @@ public class Component {
         element.add(this.attributes.getName(), attributes);
 
         JsonObject netlist = new JsonObject();
-        this.netlist.forEach((s, s2) -> {
-            netlist.add(s, new JsonPrimitive(s2));
-        });
+        this.netlist.forEach((s, s2) -> netlist.add(s, new JsonPrimitive(s2)));
 
         element.add("netlist", netlist);
 
@@ -91,31 +88,7 @@ public class Component {
         return type;
     }
 
-    public void setType(String type) {
-        this.type = type;
-    }
-
     public String getId() {
         return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public Attributes getAttributes() {
-        return attributes;
-    }
-
-    public void setAttributes(Attributes attributes) {
-        this.attributes = attributes;
-    }
-
-    public Map<String, String> getNetlist() {
-        return netlist;
-    }
-
-    public void setNetlist(Map<String, String> netlist) {
-        this.netlist = netlist;
     }
 }

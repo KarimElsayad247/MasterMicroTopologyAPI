@@ -16,18 +16,22 @@ public class Topology {
         return id;
     }
 
-    public void setId(String id) {
-        this.id = id;
-    }
-
     public List<Component> getComponents() {
         return components;
     }
 
+    public List<Component> getComponentsConnectedToNetlistNode(String netlist) {
+        List<Component> connectedComponents = new ArrayList<>();
+        for (Component component: this.components) {
+            if (component.isConnectedToNetlistNode(netlist)) connectedComponents.add(component);
+        }
+        return connectedComponents;
+    }
+
     public JsonArray getComponentsAsJsonArray() {
         JsonArray jsonArray = new JsonArray();
-        for (int i = 0; i < this.components.size(); i++) {
-            jsonArray.add(this.components.get(i).getAsJsonElement());
+        for (Component component : this.components) {
+            jsonArray.add(component.getAsJsonElement());
         }
         return jsonArray;
     }
