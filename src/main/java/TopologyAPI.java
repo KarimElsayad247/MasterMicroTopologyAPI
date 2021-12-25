@@ -100,7 +100,7 @@ public class TopologyAPI {
     }
 
     /**
-     *
+     * Writes a given topology to a Json file
      * @param topologyID  ID of the topology to write to a file
      * @param fileName    name of the file to which we write the topology
      * @throws IllegalArgumentException if there is no topology in memory with provided ID
