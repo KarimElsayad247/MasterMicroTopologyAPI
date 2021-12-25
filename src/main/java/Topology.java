@@ -3,24 +3,29 @@ import com.google.gson.JsonArray;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Main Topology class
+ * Consists of a string representing the id, and a list of components
+ * User is not allowed to manipulate it directly. User can only go through the api to query info
+ */
 public class Topology {
     private String id;
     private List<Component> components;
 
-    public Topology(String id, ArrayList<Component> components) {
+    protected Topology(String id, ArrayList<Component> components) {
         this.id = id;
         this.components = components;
     }
 
-    public String getId() {
+    protected String getId() {
         return id;
     }
 
-    public List<Component> getComponents() {
+    protected List<Component> getComponents() {
         return components;
     }
 
-    public List<Component> getComponentsConnectedToNetlistNode(String netlist) {
+    protected List<Component> getComponentsConnectedToNetlistNode(String netlist) {
         List<Component> connectedComponents = new ArrayList<>();
         for (Component component: this.components) {
             if (component.isConnectedToNetlistNode(netlist)) connectedComponents.add(component);
@@ -28,7 +33,7 @@ public class Topology {
         return connectedComponents;
     }
 
-    public JsonArray getComponentsAsJsonArray() {
+    protected JsonArray getComponentsAsJsonArray() {
         JsonArray jsonArray = new JsonArray();
         for (Component component : this.components) {
             jsonArray.add(component.getAsJsonElement());

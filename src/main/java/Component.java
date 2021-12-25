@@ -7,6 +7,9 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
+/**
+ * A class representing a component that sits on a topology.
+ */
 public class Component {
     private String type;
     private String id;
