@@ -1,6 +1,10 @@
 import java.io.IOException;
 import java.util.List;
 
+/**
+ * API interface, intended as the entry point of the api user
+ * @author Karim M. Elsayad
+ */
 public interface ITopologyAPI {
     /**
      * This method reads an object from a file and stores it in topologyArrayList

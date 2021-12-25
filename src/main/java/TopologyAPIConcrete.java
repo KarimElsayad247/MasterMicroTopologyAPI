@@ -8,7 +8,7 @@ import java.util.*;
 import com.google.gson.*;
 
 /**
- * API class, the intended entry point for the user
+ * API class, implements the API interface
  * @author Karim M. Elsayad
  */
 public class TopologyAPIConcrete implements ITopologyAPI {
