@@ -1,1 +1,1 @@
-typeSearchIndex = [{"l":"All Classes and Interfaces","u":"allclasses-index.html"},{"p":"<Unnamed>","l":"Attributes"},{"p":"<Unnamed>","l":"Component"},{"p":"<Unnamed>","l":"Main"},{"p":"<Unnamed>","l":"Topology"},{"p":"<Unnamed>","l":"TopologyAPI"}];updateSearchResults();
+typeSearchIndex = [{"l":"All Classes and Interfaces","u":"allclasses-index.html"},{"p":"<Unnamed>","l":"Attributes"},{"p":"<Unnamed>","l":"Component"},{"p":"<Unnamed>","l":"ITopologyAPI"},{"p":"<Unnamed>","l":"Topology"},{"p":"<Unnamed>","l":"TopologyAPIConcrete"}];updateSearchResults();
