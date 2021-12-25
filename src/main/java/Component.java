@@ -60,6 +60,11 @@ public class Component {
         }
     }
 
+    /**
+     * Check if component is connected to given node
+     * @param node  Name of node to which the component might be connected
+     * @return      True if component is connected to given node, false otherwise.
+     */
     protected boolean isConnectedToNetlistNode(String node) {
         for (String value: this.netlist.values()) {
             if(value.equals(node)) return true;
@@ -67,6 +72,10 @@ public class Component {
         return false;
     }
 
+    /**
+     * Get the component as a gson.JsonElement.
+     * @return The component as a JsonElement
+     */
     protected JsonElement getAsJsonElement() {
         JsonObject element = new JsonObject();
         element.add("type", new JsonPrimitive(this.type));

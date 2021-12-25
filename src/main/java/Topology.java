@@ -25,6 +25,12 @@ public class Topology {
         return components;
     }
 
+    /**
+     * Get all the components connected to a given node on this topology
+     * @param netlist   name of netlist to which nodes might be connected
+     * @return  A list of components that are connected to the given topology.
+     *          can be an empty list
+     */
     protected List<Component> getComponentsConnectedToNetlistNode(String netlist) {
         List<Component> connectedComponents = new ArrayList<>();
         for (Component component: this.components) {
@@ -33,6 +39,10 @@ public class Topology {
         return connectedComponents;
     }
 
+    /**
+     * Get the components on this topology as a gson.JsonArray
+     * @return a JsonArray containing jsonElements representing each component
+     */
     protected JsonArray getComponentsAsJsonArray() {
         JsonArray jsonArray = new JsonArray();
         for (Component component : this.components) {
