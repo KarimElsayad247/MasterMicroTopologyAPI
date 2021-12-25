@@ -1,18 +1,33 @@
 @startuml
+
+class TopologyAPI {
+
+    - Topologies: List<Topology>
+    - IdValuePairs: HashMap
+
+    + readJSON(): void
+    + writeJSON(): void
+    + queryTopologies(): List<Topology>
+    + deleteTopology(): Boolean
+    + queryDevices(): List<Components>
+    + queryDevicesWithNetlistNode(): List<Components>
+
+}
+
 class Topology {
-    id: String
-    components: List
-    getComponentsConnectedToNetlistNode(): List<Component>
-    getComponentsAsJsonArray(): JsonArray
+    - id: String
+    - components: List
+    # getComponentsConnectedToNetlistNode(): List<Component>
+    # getComponentsAsJsonArray(): JsonArray
 }
 
 class Components {
-    type: String
-    id: String
-    attributes: Attributes
-    netlist: Map
-    isConnectedToNetlistNode(): Boolean
-    getAsJsonElement(): JsonElement
+    -type: String
+    -id: String
+    -attributes: Attributes
+    -netlist: Map
+    # isConnectedToNetlistNode(): Boolean
+    # getAsJsonElement(): JsonElement
 }
 
 class Attributes {
@@ -21,6 +36,8 @@ class Attributes {
     minValue: double
     maxValue: double
 }
+
+TopologyAPI "1" *-- "0*" Topology: stores
 Topology "1" *-- "0*" Components : Contains
 Components "1" *-- "1" Attributes : Has
 @enduml
