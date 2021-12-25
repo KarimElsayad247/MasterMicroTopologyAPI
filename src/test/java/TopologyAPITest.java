@@ -31,6 +31,24 @@ class TopologyAPITest {
             topologyAPI1.readJSON(fileName2);
             Assertions.assertEquals(2, topologyAPI1.queryTopologies().size());
         }
+        
+        @Test
+        @DisplayName("Throws an exception when provided with a bad json file")
+        public void throwsExeptionWhenProvidedBadJson() {
+            String badJsonFileName1 = "./target/classes/bad1.json";
+            String badJsonFileName2 = "./target/classes/bad2.json";
+            String badJsonFileName3 = "./target/classes/bad3.json";
+
+            Assertions.assertThrows(NullPointerException.class, () -> {
+                topologyAPI1.readJSON(badJsonFileName1);
+            });
+            Assertions.assertThrows(NullPointerException.class, () -> {
+                topologyAPI1.readJSON(badJsonFileName2);
+            });
+            Assertions.assertThrows(NullPointerException.class, () -> {
+                topologyAPI1.readJSON(badJsonFileName3);
+            });
+        }
     }
 
     @Nested
