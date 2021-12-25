@@ -5,13 +5,13 @@ import java.util.List;
 
 class TopologyAPITest {
 
-    TopologyAPI topologyAPI1;
+    TopologyAPIConcrete topologyAPI1;
     String fileName1 = "./target/classes/topology.json";
     String fileName2 = "./target/classes/topology2.json";
 
     @BeforeEach
     public void setUp() {
-        topologyAPI1 = new TopologyAPI();
+        topologyAPI1 = new TopologyAPIConcrete();
     }
 
     @Nested
@@ -45,7 +45,7 @@ class TopologyAPITest {
             topologyAPI1.writeJSON("top1", outFile1);
             topologyAPI1.writeJSON("top2", outFile2);
 
-            TopologyAPI topologyAPI2 = new TopologyAPI();
+            TopologyAPIConcrete topologyAPI2 = new TopologyAPIConcrete();
             topologyAPI2.readJSON(outFile1);
             topologyAPI2.readJSON(outFile2);
 
