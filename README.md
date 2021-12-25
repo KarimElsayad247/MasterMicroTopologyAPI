@@ -32,3 +32,11 @@ This meant I had to implement my own custom JSON deserializer.
 Dynamic properties are impossible with java, this meant I had to rethink the design of my classes.
 * There was a typo in topology.json! After scratching my head with a weird null pointer exception, it turned out that
 the "default" property for value of nmos was written as "deafult". I assume this is a typo.
+
+## Documentation
+
+Detailed docs [Can be found here](http://karimelsayad.me/MasterMicroTopologyAPI/TopologyAPI.html).
+
+Below is a simple UML diagram representing the class structure
+
+![UML class diagram representing project class structure](./resources/classDiagram.png)
