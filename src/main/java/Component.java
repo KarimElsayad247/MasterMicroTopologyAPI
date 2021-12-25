@@ -16,7 +16,7 @@ public class Component {
     /**
      * @param jsonElement: the component in json format
      */
-    public Component(JsonElement jsonElement) {
+    protected Component(JsonElement jsonElement) {
 
         // get the top level contents of the json element (type, id, netlist, and attribute)
         // as a set of map entries
@@ -24,9 +24,9 @@ public class Component {
         Set<Map.Entry<String,JsonElement>> entrySet = object.entrySet();
 
         // Iterate over the map, and assign to appropriate properties
-        Iterator entrySetIterator = entrySet.iterator();
+        Iterator<Map.Entry<String, JsonElement>> entrySetIterator = entrySet.iterator();
         while (entrySetIterator.hasNext()) {
-            Map.Entry<String, JsonElement> entry = (Map.Entry<String, JsonElement>) entrySetIterator.next();
+            Map.Entry<String, JsonElement> entry = entrySetIterator.next();
             String key = entry.getKey();
             switch (key) {
                 case "type" -> this.type = entry.getValue().getAsString();
@@ -36,9 +36,9 @@ public class Component {
                     Set<Map.Entry<String, JsonElement>> netlistEntrySet = netlistJsonObject.entrySet();
 
                     // Add all entries to map
-                    Iterator netlistIterator = netlistEntrySet.iterator();
+                    Iterator<Map.Entry<String, JsonElement>> netlistIterator = netlistEntrySet.iterator();
                     while (netlistIterator.hasNext()) {
-                        Map.Entry<String, JsonElement> netlistEntry = (Map.Entry<String, JsonElement>) netlistIterator.next();
+                        Map.Entry<String, JsonElement> netlistEntry = netlistIterator.next();
                         this.netlist.put(netlistEntry.getKey(), netlistEntry.getValue().getAsString());
                     }
                 }
@@ -48,33 +48,33 @@ public class Component {
                     // The attributesObject only contains jsonPrimitives. We can't call
                     // getAsObject on any of them.
                     JsonObject attributesObject = entry.getValue().getAsJsonObject();
-                    double defaultvalue = attributesObject.get("default").getAsDouble();
+                    double defaultValue = attributesObject.get("default").getAsDouble();
                     double minVale = attributesObject.get("min").getAsDouble();
                     double maxValue = attributesObject.get("max").getAsDouble();
-                    this.attributes = new Attributes(attributeName, defaultvalue, minVale, maxValue);
+                    this.attributes = new Attributes(attributeName, defaultValue, minVale, maxValue);
                 }
             }
         }
     }
 
-    public boolean isConnectedToNetlistNode(String node) {
+    protected boolean isConnectedToNetlistNode(String node) {
         for (String value: this.netlist.values()) {
             if(value.equals(node)) return true;
         }
         return false;
     }
 
-    public JsonElement getAsJsonElement() {
+    protected JsonElement getAsJsonElement() {
         JsonObject element = new JsonObject();
         element.add("type", new JsonPrimitive(this.type));
         element.add("id", new JsonPrimitive(this.id));
 
         JsonObject attributes = new JsonObject();
-        attributes.add("default", new JsonPrimitive(this.attributes.getDefaultValue()));
-        attributes.add("min", new JsonPrimitive(this.attributes.getMinValue()));
-        attributes.add("max", new JsonPrimitive(this.attributes.getMaxValue()));
+        attributes.add("default", new JsonPrimitive(this.attributes.defaultValue()));
+        attributes.add("min", new JsonPrimitive(this.attributes.minValue()));
+        attributes.add("max", new JsonPrimitive(this.attributes.maxValue()));
 
-        element.add(this.attributes.getName(), attributes);
+        element.add(this.attributes.name(), attributes);
 
         JsonObject netlist = new JsonObject();
         this.netlist.forEach((s, s2) -> netlist.add(s, new JsonPrimitive(s2)));
@@ -84,11 +84,11 @@ public class Component {
         return element;
     }
 
-    public String getType() {
+    protected String getType() {
         return type;
     }
 
-    public String getId() {
+    protected String getId() {
         return id;
     }
 }
