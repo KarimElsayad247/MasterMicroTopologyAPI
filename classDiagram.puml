@@ -6,17 +6,17 @@ class Topology {
 class Components {
     type: String
     id: String
-    attributes: Atrributes
+    attributes: Attributes
     netlist: Map
     isConnectedToNetlistNode(): Boolean
 }
 
-class Atrributes {
+class Attributes {
     name: String
     defaultValue: double
     minValue: double
     maxValue: double
 }
 Topology "1" *-- "0*" Components : Contains
-Components "1" *-- "1" Atrributes : Has
+Components "1" *-- "1" Attributes : Has
 @enduml
