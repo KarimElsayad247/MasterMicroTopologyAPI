@@ -2,13 +2,17 @@
 class Topology {
     id: String
     components: List
+    getComponentsConnectedToNetlistNode(): List<Component>
+    getComponentsAsJsonArray(): JsonArray
 }
+
 class Components {
     type: String
     id: String
     attributes: Attributes
     netlist: Map
     isConnectedToNetlistNode(): Boolean
+    getAsJsonElement(): JsonElement
 }
 
 class Attributes {
