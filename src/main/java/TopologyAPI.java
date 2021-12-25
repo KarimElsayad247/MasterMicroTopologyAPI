@@ -8,7 +8,8 @@ import java.util.*;
 import com.google.gson.*;
 
 /**
- *
+ * API class, the intended entry point for the user
+ * @author Karim M. Elsayad
  */
 public class TopologyAPI {
 
