@@ -1,17 +1,17 @@
 @startuml
-
-class TopologyAPI {
-
-    - Topologies: List<Topology>
-    - IdValuePairs: HashMap
-
+scale 700 width
+interface ITopologyAPI {
     + readJSON(): void
     + writeJSON(): void
     + queryTopologies(): List<Topology>
     + deleteTopology(): Boolean
     + queryDevices(): List<Components>
     + queryDevicesWithNetlistNode(): List<Components>
+}
 
+class TopologyAPIConcrete {
+    - Topologies: List<Topology>
+    - IdValuePairs: HashMap
 }
 
 class Topology {
@@ -37,7 +37,13 @@ class Attributes {
     maxValue: double
 }
 
-TopologyAPI "1" *-- "0*" Topology: stores
+together {
+    interface ITopologyAPI
+    class TopologyAPIConcrete
+}
+TopologyAPIConcrete -[hidden]-> ITopologyAPI
+TopologyAPIConcrete "Implements" .l.> ITopologyAPI
+TopologyAPIConcrete "1" *-- "0*" Topology: stores
 Topology "1" *-- "0*" Components : Contains
 Components "1" *-- "1" Attributes : Has
 @enduml
