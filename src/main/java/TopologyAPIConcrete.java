@@ -37,9 +37,9 @@ public class TopologyAPIConcrete implements ITopologyAPI {
             Set<Map.Entry<String,JsonElement>> entrySet = object.entrySet();
 
             // Iterate over the map, get id and components and assign to predefined variables
-            Iterator entrySetIterator = entrySet.iterator();
+            Iterator<Map.Entry<String, JsonElement>> entrySetIterator = entrySet.iterator();
             while (entrySetIterator.hasNext()) {
-                Map.Entry<String, JsonElement> entry = (Map.Entry<String, JsonElement>) entrySetIterator.next();
+                Map.Entry<String, JsonElement> entry = entrySetIterator.next();
                 String key = entry.getKey();
                 if (key.equals("id")) {
                     topologyID = entry.getValue().getAsString();
@@ -76,7 +76,7 @@ public class TopologyAPIConcrete implements ITopologyAPI {
     }
 
     @Override
-    public void readJSON(String fileName) throws IOException{
+    public void readJSON(String fileName) throws IOException, NullPointerException {
 
         // Assign the custom deserializer to gsonBuilder to get a gson object using
         // that deserializer

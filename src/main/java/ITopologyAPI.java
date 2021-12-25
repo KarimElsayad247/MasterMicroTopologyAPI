@@ -12,8 +12,9 @@ public interface ITopologyAPI {
      * @param fileName The name of the file from which to read a string
      *                 provided as an absolute or relative path
      * @throws IOException If the file doesn't exist. API user should provide an existing file.
+     * @throws NullPointerException if json file is bad (wrong format, missing params, etc...)
      */
-    void readJSON(String fileName) throws IOException;
+    void readJSON(String fileName) throws IOException, NullPointerException;
 
     /**
      * Writes a given topology to a Json file
