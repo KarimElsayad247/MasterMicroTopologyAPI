@@ -1,6 +1,6 @@
 # Topology API Task
 
-[Documentation](##Documentation)
+[Documentation](http://karimelsayad.me/MasterMicroTopologyAPI/TopologyAPI.html)
 
 Written in Java. Reasons I chose java include:
 
@@ -13,7 +13,7 @@ this meant I had to exclude Ruby and Javascript too.
 
 I'm using IntelliJ IDE, which integrates great code analysis tools. I'm using Maven build tool.
 
-##Assumptions:
+## Assumptions:
 This implementation assumes few things:
 
 * Each json file contains only 1 topology.
@@ -29,7 +29,7 @@ according to non-functional requirements)
 * queryComponents method doesn't raise error, and returns null if topology not found
 
 
-##Challenges faced
+## Challenges faced
 
 * The name of the attribute property is dynamic (resistance, m(l), etc...).
 This meant I had to implement my own custom JSON deserializer.
@@ -37,7 +37,7 @@ Dynamic properties are impossible with java, this meant I had to rethink the des
 * There was a typo in topology.json! After scratching my head with a weird null pointer exception, it turned out that
 the "default" property for value of nmos was written as "deafult". I assume this is a typo.
 
-##Documentation
+## Documentation
 
 Detailed docs [Can be found here](http://karimelsayad.me/MasterMicroTopologyAPI/TopologyAPI.html).
 
