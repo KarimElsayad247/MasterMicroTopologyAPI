@@ -13,7 +13,8 @@ this meant I had to exclude Ruby and Javascript too.
 
 I'm using IntelliJ IDE, which integrates great code analysis tools. I'm using Maven build tool.
 
-## Assumptions:
+## Assumptions
+
 This implementation assumes few things:
 
 * Each json file contains only 1 topology.
@@ -21,13 +22,12 @@ This implementation assumes few things:
 * The id, type, and netlist properties exist for all components.
 * The attribute properties must include, and only include: default, min, and max.
 * Anything not specified here should be provided exactly as the example topology.json received with task
-* The fileName arguments to readJSON and writeJSON should contain the relative path from the present working directory to 
-the json file.
+* The fileName arguments to readJSON and writeJSON should contain the relative path from the present working directory to the json file.
 * The specs don't mention a function to check for existence of a topology, thus the next two assumptions (More is bad,
 according to non-functional requirements)
 * Delete method doesn't raise errors, but returns false if element to delete doesn't exist
 * queryComponents method doesn't raise error, and returns null if topology not found
-
+* bad json files raise exceptions. User should make sure files are correct. 
 
 ## Challenges faced
 
